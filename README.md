@@ -1,0 +1,2 @@
+# arugorizumu
+for training
