@@ -36,7 +36,6 @@ void shuffle_vector(vector<int>& v)
 
 void selection_sort(vector<int>& v)
 {
-    
     int min_index;
     char filename[30];
     int i;
