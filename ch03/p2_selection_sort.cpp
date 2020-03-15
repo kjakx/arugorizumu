@@ -3,7 +3,6 @@
 #include <algorithm>
 #include <vector>
 #include <random>
-#include <string>
 
 using namespace std;
 
@@ -14,7 +13,6 @@ void output_plotdata(const char* filename, vector<int>&);
 
 int main()
 {
-    int min_index;
     int N = 100; // problem size
     vector<int> v(N);
     for (int i = 1; i <= N; i++) v[i-1] = i;    // 1 ~ N までの整数を要素とする配列
@@ -41,12 +39,12 @@ void selection_sort(vector<int>& v)
     int i;
     for (i = 0; i < v.size() - 1; i++)
     {
-        sprintf(filename, "./data/selection/%03d", i+1);
         min_index = i;
         for (int j = i; j < v.size(); j++)
         {
             if (v[min_index] > v[j]) min_index = j;
         }
+        sprintf(filename, "./data/selection/%03d", i+1);
         output_plotdata(filename, v);
         swap(v[i], v[min_index]);
     }
