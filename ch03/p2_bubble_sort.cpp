@@ -7,7 +7,7 @@
 using namespace std;
 
 void shuffle_vector(vector<int>&);
-void insertion_sort(vector<int>&);
+void bubble_sort(vector<int>&);
 void print_array(vector<int>&);
 void output_plotdata(const char* filename, vector<int>&);
 
@@ -19,7 +19,7 @@ int main()
     shuffle_vector(v);
     cout << "### before sorting ###" << endl;
     print_array(v);
-    insertion_sort(v);
+    bubble_sort(v);
     cout << "### after sorting ###" << endl;
     print_array(v);
     return 0;
@@ -32,20 +32,27 @@ void shuffle_vector(vector<int>& v)
     shuffle(v.begin(), v.end(), engine);
 }
 
-void insertion_sort(vector<int>& v)
+void bubble_sort(vector<int>& v)
 {
     char filename[30];
     int i;
-    for (i = 1; i < v.size(); i++)
+    bool already_sorted;
+    for (i = 0; i < v.size() - 1; i++)
     {
-        sprintf(filename, "./data/insertion/%03d", i);
+        already_sorted = true;
+        sprintf(filename, "./data/bubble/%03d", i+1);
         output_plotdata(filename, v);
-        for (int j = i; j >= 1; j--)
+        for (int j = 0; j < v.size() - 1 - i; j++)
         {
-            if (v[j] < v[j-1]) swap(v[j], v[j-1]);
+            if (v[j] > v[j+1])
+            {
+                swap(v[j], v[j+1]);
+                already_sorted = false;
+            }
+            if (already_sorted) break;
         }
     }
-    sprintf(filename, "./data/insertion/%03d", i);
+    sprintf(filename, "./data/bubble/%03d", i+1);
     output_plotdata(filename, v);
 }
 
