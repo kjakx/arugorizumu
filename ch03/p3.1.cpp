@@ -17,13 +17,14 @@ char filename[30];
 int main()
 {
     int N = 50; // problem size
-    vector<int> A(N), B(N), C(N);
+    vector<int> A(N), B(N), C;
     int a_itr = 0, b_itr = 0;
     int loop_count = 0;
     random_number(A, 1, 100);
     random_number(B, 1, 100);
-    quick_sort(A, 0, A.size() - 1);
-    quick_sort(B, 0, B.size() - 1);
+    quick_sort(A, 0, A.size() - 1); // O(nlogn)
+    quick_sort(B, 0, B.size() - 1); // O(nlogn)
+    // 最悪計算量：2n + 1 = O(n)
     while (!(a_itr > A.size() - 1 || b_itr > B.size() - 1))
     {
         if (A[a_itr] == B[b_itr])
@@ -44,6 +45,11 @@ int main()
         }
         loop_count++;
     }
+    cout << "### A ###" << endl;
+    print_array(A);
+    cout << "### B ###" << endl;
+    print_array(B);
+    cout << "### C ###" << endl;
     print_array(C);
     cout << "loop_count : " << loop_count << endl;
     return 0;
@@ -60,7 +66,7 @@ void random_number(vector<int>& v, int min, int max)
 {
     random_device seed_gen;
     mt19937 engine(seed_gen());
-    uniform_int_distribution<> rand(min, max);
+    uniform_int_distribution<> rand(min+1, max+1);
     for (int i = 0; i < v.size() - 1; i++) v[i] = rand(engine);
 }
 
