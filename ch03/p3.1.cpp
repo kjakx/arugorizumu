@@ -84,14 +84,10 @@ void quick_sort(vector<int>& v, const int left, const int right)
             if (left_idx <= right_idx)
             {
                 swap(v[left_idx++], v[right_idx--]);
-                sprintf(filename, "./data/quick/%03d", ++swap_count);
-                output_plotdata(filename, v);
             }
         }
         partition = right_idx;
         swap(v[pivot_idx], v[partition]);
-        sprintf(filename, "./data/quick/%03d", ++swap_count);
-        output_plotdata(filename, v);
         quick_sort(v, left, partition - 1);
         quick_sort(v, partition + 1, right);
     }
