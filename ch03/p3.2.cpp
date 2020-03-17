@@ -17,44 +17,30 @@ char filename[30];
 int main()
 {
     int N = 33; // problem size
-    vector<int> A(N), B(N), C(N), D(3*N);
+    vector<int> A(N+1), B(N+1), C(N+1), D(3*N);
     int a_itr = 0, b_itr = 0, c_itr = 0, d_itr = 0;
     int loop_count = 0;
     random_number(A, 1, 100);
     random_number(B, 1, 100);
     random_number(C, 1, 100);
+    A[N] = 10000; B[N] = 10000; C[N] = 10000; // as sentinel
     quick_sort(A, 0, A.size() - 1);
     quick_sort(B, 0, B.size() - 1);
     quick_sort(C, 0, C.size() - 1);
     // 3つの配列をマージしてDに格納
-    while (!(a_itr > A.size() - 1 && b_itr > B.size() - 1 && c_itr > C.size()))
+    while (d_itr < 3*N)
     {
-        if (a_itr > A.size() - 1 && b_itr > B.size())
-        {
-            D[d_itr++] = C[c_itr++];
-        }
-        else if (b_itr > B.size() - 1 && c_itr > C.size() - 1)
+        if (A[a_itr] == min({A[a_itr], B[b_itr], C[c_itr]}))
         {
             D[d_itr++] = A[a_itr++];
         }
-        else if (c_itr > C.size() - 1 && a_itr > A.size() - 1)
+        else if (B[b_itr] == min({A[a_itr], B[b_itr], C[c_itr]}))
         {
             D[d_itr++] = B[b_itr++];
         }
-        else
+        else    // C[c_itr] is minimum
         {
-            if (A[a_itr] == min({A[a_itr], B[b_itr], C[c_itr]}))
-            {
-                D[d_itr++] = A[a_itr++];
-            }
-            else if (B[b_itr] == min({A[a_itr], B[b_itr], C[c_itr]}))
-            {
-                D[d_itr++] = B[b_itr++];
-            }
-            else
-            {
-                D[d_itr++] = C[c_itr++];
-            }
+            D[d_itr++] = C[c_itr++];
         }
         loop_count++;
     }

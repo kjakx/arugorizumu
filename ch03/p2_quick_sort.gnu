@@ -6,7 +6,7 @@ unset border
 unset tics
 unset key
 unset colorbox
-do for [i = 1 : 166] {
+do for [i = 1 : 162] {
   plot sprintf("data/quick/%03d", i) with point pointtype 7 title sprintf("t=%d", i)
 }
 
