@@ -24,7 +24,7 @@ int main()
     random_number(B, 1, 100);
     quick_sort(A, 0, A.size() - 1); // O(nlogn)
     quick_sort(B, 0, B.size() - 1); // O(nlogn)
-    // 最悪計算量：2n + 1 = O(n)
+    // 最悪計算量：O(n)
     while (!(a_itr > A.size() - 1 || b_itr > B.size() - 1))
     {
         if (A[a_itr] == B[b_itr])
