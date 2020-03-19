@@ -68,7 +68,7 @@ void random_number(vector<int>& v, int min, int max)
     random_device seed_gen;
     mt19937 engine(seed_gen());
     uniform_int_distribution<> rand(min+1, max+1);
-    for (int i = 0; i < v.size() - 1; i++) v[i] = rand(engine);
+    for (int i = 0; i < v.size(); i++) v[i] = rand(engine);
 }
 
 void quick_sort(vector<int>& v, const int left, const int right)
