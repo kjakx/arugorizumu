@@ -33,7 +33,7 @@ public:
     Node* search(int key)
     {
         Node* current = root;
-        while (!(current == NULL))
+        while (current != NULL)
         {
             if (current->data == key)
             {
@@ -92,6 +92,78 @@ public:
             }
         }
         return;
+    }
+
+    void erase(int key)
+    {
+        Node* current = root;
+        Node* parent;
+        while (current->data != key)
+        {
+            parent = current;
+
+            if (current->data > key)
+            {
+                current = current->left_child;
+            }
+            else
+            {
+                current = current->right_child;
+            }
+        }
+        if (current == NULL) return;
+        // current is a leaf
+        if (current->left_child == NULL && current->right_child == NULL)
+        {
+            delete current;
+        }
+        // current has a child
+        else if (current->left_child == NULL || current->right_child == NULL)
+        {
+            if (current->left_child == NULL)
+            {
+                if (current == parent->left_child)
+                {
+                    parent->left_child = current->right_child;
+                }
+                else if (current == parent->right_child)
+                {
+                    parent->right_child = current->right_child;
+                }
+            }
+            else // current has a left child
+            {
+                if (current == parent->left_child)
+                {
+                    parent->left_child = current->left_child;
+                }
+                else // (current == parent->right_child)
+                {
+                    parent->right_child = current->left_child;
+                }
+            }
+        }
+        else // current has left and right children
+        {
+            Node* leaf = current->right_child;
+            if (leaf->left_child != NULL)
+            {
+                while (leaf->left_child != NULL)
+                {
+                    parent = leaf;
+                    leaf = leaf->left_child;
+                }
+                current->data = leaf->data;
+                delete leaf;
+            }
+            else
+            {
+                current->right_child->left_child = current->left_child;
+                
+            }
+            current->data = leaf->data;
+            delete leaf;
+        }
     }
 };
 
