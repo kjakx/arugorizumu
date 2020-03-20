@@ -57,7 +57,6 @@ void random_number(vector<int>& v, int min, int max)
     for (int i = 0; i < v.size(); i++) v[i] = rand(engine);
 }
 
-
 void quick_sort(vector<int>& v, const int left, const int right)
 {
     int left_idx = left + 1, right_idx = right;
@@ -80,6 +79,7 @@ void quick_sort(vector<int>& v, const int left, const int right)
         quick_sort(v, partition + 1, right);
     }
 }
+
 int binary_search(vector<int>& v, int key)
 {
     int pos = -1;
