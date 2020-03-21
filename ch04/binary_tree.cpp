@@ -3,6 +3,7 @@
 #include <algorithm>
 #include <vector>
 #include <random>
+#include <queue>
 
 using namespace std;
 
@@ -170,6 +171,23 @@ public:
             delete sub_node;
         }
     }
+
+    // traverse tree nodes by bsf and print the data
+    void print_tree()
+    {
+        Node* current;
+        queue<Node*> q;
+        cout << root->data << endl;
+        if (root->left_child  != NULL) q.push(root->left_child);
+        if (root->right_child != NULL) q.push(root->right_child);
+        while (!q.empty())
+        {
+            current = q.front(); q.pop();
+            cout << current->data << endl;
+            if (current->left_child  != NULL) q.push(current->left_child);
+            if (current->right_child != NULL) q.push(current->right_child);
+        }
+    }
 };
 
 void shuffle_vector(vector<int>&);
@@ -183,18 +201,14 @@ void output_plotdata(const char* filename, vector<int>&);
 int main()
 {
     BinarySearchTree *BST = new BinarySearchTree();
-    int S[] = {59, 38, 7, 42, 16, 81, 4, 32, 95, 18, 25}; // 11 elements
+    int S[11] = {59, 38, 7, 42, 16, 81, 4, 32, 95, 18, 25};
     for (int i = 0; i < 11; i++)
     {
         BST->insert(S[i]);
     }
     BST->insert(23);
     BST->erase(38);
-    if (pos < 0) cout << "key not found" << endl;
-    else cout << "key found at " << pos << endl;
-    cout << "### v ###" << endl;
-    print_array(v);
-    cout << "key = " << key << endl;
+    BST->print_tree();
     return 0;
 }
 
