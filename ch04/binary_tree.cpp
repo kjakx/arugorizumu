@@ -20,12 +20,12 @@ public:
     }
 };
 
-class BinaryTree
+class BinarySearchTree
 {
 public:
     Node* root;
 
-    BinaryTree()
+    BinarySearchTree()
     {
         root = new Node();
     }
@@ -94,11 +94,12 @@ public:
         return;
     }
 
+    // NOTE: this code can NOT deal with the case that the root has the deletion key !!
     void erase(int key)
     {
         Node* current = root;
-        Node* parent;
-        while (current->data != key)
+        Node* parent = NULL;
+        while (current->data != key && current != NULL)
         {
             parent = current;
 
@@ -111,7 +112,9 @@ public:
                 current = current->right_child;
             }
         }
+        // no node which has key data
         if (current == NULL) return;
+
         // current is a leaf
         if (current->left_child == NULL && current->right_child == NULL)
         {
@@ -143,26 +146,28 @@ public:
                 }
             }
         }
-        else // current has left and right children
+        // current has both left and right children
+        else
         {
-            Node* leaf = current->right_child;
-            if (leaf->left_child != NULL)
+            // the node which substitutes for the deletion node
+            Node* sub_node = current->right_child;
+            while (sub_node->left_child != NULL)
             {
-                while (leaf->left_child != NULL)
-                {
-                    parent = leaf;
-                    leaf = leaf->left_child;
-                }
-                current->data = leaf->data;
-                delete leaf;
+                parent = sub_node;
+                sub_node = sub_node->left_child;
+            }
+            current->data = sub_node->data;
+            // the right_child of the node for deletion has no left child 
+            if (sub_node == current->right_child)
+            {
+                current->right_child = sub_node->right_child;
             }
             else
             {
-                current->right_child->left_child = current->left_child;
-                
+                parent->left_child = sub_node->right_child;
             }
-            current->data = leaf->data;
-            delete leaf;
+            current->data = sub_node->data;
+            delete sub_node;
         }
     }
 };
@@ -177,14 +182,14 @@ void output_plotdata(const char* filename, vector<int>&);
 
 int main()
 {
-    int N = 100; // problem size
-    int key, key_index, pos;
-    vector<int> v(N);
-    random_number(v, 1, 100);
-    quick_sort(v, 0, v.size() - 1);
-    key_index = random_number(1, 100);
-    key = v[key_index];
-    pos = binary_search(v, key);
+    BinarySearchTree *BST = new BinarySearchTree();
+    int S[] = {59, 38, 7, 42, 16, 81, 4, 32, 95, 18, 25}; // 11 elements
+    for (int i = 0; i < 11; i++)
+    {
+        BST->insert(S[i]);
+    }
+    BST->insert(23);
+    BST->erase(38);
     if (pos < 0) cout << "key not found" << endl;
     else cout << "key found at " << pos << endl;
     cout << "### v ###" << endl;
