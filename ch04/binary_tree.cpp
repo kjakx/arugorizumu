@@ -95,7 +95,6 @@ public:
         return;
     }
 
-    // NOTE: this code can NOT deal with the case that the root has the deletion key !!
     void erase(int key)
     {
         Node* current = root;
@@ -167,7 +166,6 @@ public:
             {
                 parent->left_child = sub_node->right_child;
             }
-            current->data = sub_node->data;
             delete sub_node;
         }
     }
@@ -208,6 +206,9 @@ int main()
     }
     BST->insert(23);
     BST->erase(38);
+    BST->print_tree();
+    cout << "---" << endl;
+    BST->erase(59);
     BST->print_tree();
     return 0;
 }
