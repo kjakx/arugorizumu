@@ -2,6 +2,7 @@
 #include <fstream>
 #include <vector>
 #include <random>
+#include <algorithm>
 
 using namespace std;
 
@@ -39,6 +40,7 @@ public:
                 break;
             }
         }
+        // current is a leaf
         if (child_index > range) data[current_index] = current;
     }
 
@@ -85,7 +87,7 @@ public:
     }
 };
 
-int random_number(int, int);
+void shuffle_vector(vector<int>&);
 void heap_sort(Heap&, vector<int>&);
 void output_plotdata(const char* filename, vector<int>&);
 void print_array(vector<int>&);
@@ -100,8 +102,9 @@ int main()
     vector<int> sorted;
     for (int i = 0; i < N; i++)
     {
-        S[i] = random_number(1, 100);
+        S[i] = i+1;
     }
+    shuffle_vector(S);
     sprintf(filename, "./data/heap/%03d", ++plot_count);
     output_plotdata(filename, S);
     vector<int> plot_vec(N, 0);
@@ -132,6 +135,13 @@ int main()
     return 0;
 }
 
+void shuffle_vector(vector<int>& v)
+{
+    random_device seed_gen;
+    mt19937 engine(seed_gen());
+    shuffle(v.begin(), v.end(), engine);
+}
+
 int random_number(int min, int max)
 {
     int r;
@@ -156,6 +166,7 @@ void heap_sort(Heap& h, vector<int>& v)
         {
             plot_vec[j] = v[j];
         }
+        h.delete_min();
         for (int k = i; k < N; k++)
         {
             plot_vec[k] = h.data[k - i + 1];
@@ -163,7 +174,6 @@ void heap_sort(Heap& h, vector<int>& v)
         sprintf(filename, "./data/heap/%03d", ++plot_count);
         output_plotdata(filename, plot_vec);
         //------
-        h.delete_min();
     }
 }
 
