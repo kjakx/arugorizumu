@@ -39,6 +39,7 @@ public:
                 break;
             }
         }
+        if (child_index > range) data[current_index] = current;
     }
 
     void delete_min()
@@ -87,6 +88,7 @@ public:
 int random_number(int, int);
 void heap_sort(Heap&, vector<int>&);
 void output_plotdata(const char* filename, vector<int>&);
+void print_array(vector<int>&);
 char filename[30];
 const int N = 100;  // problem size
 int plot_count = 0;
@@ -95,6 +97,7 @@ int main()
 {
     Heap h;
     vector<int> S(N);
+    vector<int> sorted;
     for (int i = 0; i < N; i++)
     {
         S[i] = random_number(1, 100);
@@ -105,7 +108,7 @@ int main()
     for (int i = 0; i < N; i++)
     {
         h.insert(S[i]);
-        //--- for plotting (unnecessary for sorting algorithm) ---
+        //--- for plotting (unnecessary for making heap) ---
         for (int j = 0; j < i + 1; j++)
         {
             plot_vec[j] = h.data[j+1];
@@ -118,14 +121,15 @@ int main()
         output_plotdata(filename, plot_vec);
         //------
     }
-    h.print_heap();
-    heap_sort(h, S);
-    h.delete_min();
-    h.print_heap();
-    cout << "---" << endl;
-    h.insert(9);
-    h.print_heap();
-    cout << "---" << endl;
+    //h.print_heap();
+    //cout << "### before sorting ###" << endl;
+    //print_array(S);
+    //cout << "### heap ###" << endl;
+    //h.print_heap();
+    heap_sort(h, sorted);
+    cout << "### after sorting ###" << endl;
+    print_array(sorted);
+    return 0;
 }
 
 int random_number(int min, int max)
@@ -139,10 +143,9 @@ int random_number(int min, int max)
 }
 
 // O(height of heap (logn)) * O(number of element(n)) = O(nlogn)
-void heap_sort(Heap& h)
+void heap_sort(Heap& h, vector<int>& v)
 {
     int min;
-    vector<int> v;
     vector<int> plot_vec(N, 0);
     for (int i = 1; i <= N; i++)
     {
@@ -160,6 +163,7 @@ void heap_sort(Heap& h)
         sprintf(filename, "./data/heap/%03d", ++plot_count);
         output_plotdata(filename, plot_vec);
         //------
+        h.delete_min();
     }
 }
 
@@ -170,4 +174,13 @@ void output_plotdata(const char* filename, vector<int>& v)
     {
         ofs << i+1 << " " << v[i] << endl;
     }
+}
+
+void print_array(vector<int>& v)
+{
+    for (int i = 0; i < v.size(); i++)
+    {
+        cout << v[i] << " ";
+    }
+    cout << endl;
 }
