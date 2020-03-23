@@ -105,11 +105,13 @@ public:
 
             if (current->data > key)
             {
-                current = current->left_child;
+                if (current->left_child == NULL) break;
+                else current = current->left_child;
             }
             else
             {
-                current = current->right_child;
+                if (current->right_child == NULL) break;
+                else current = current->right_child;
             }
         }
         // no node which has key data
@@ -118,6 +120,14 @@ public:
         // current is a leaf
         if (current->left_child == NULL && current->right_child == NULL)
         {
+            if (current == parent->left_child)
+            {
+                parent->left_child = NULL;
+            }
+            else if (current == parent->right_child)
+            {
+                parent->right_child = NULL;
+            }
             delete current;
         }
         // current has a child
@@ -186,6 +196,16 @@ public:
             if (current->right_child != NULL) q.push(current->right_child);
         }
     }
+
+    int min()
+    {
+        Node* current = root;
+        while (current->left_child != NULL)
+        {
+            current = current->left_child;
+        }
+        return current->data;
+    }
 };
 
 void shuffle_vector(vector<int>&);
@@ -210,6 +230,12 @@ int main()
     cout << "---" << endl;
     BST->erase(59);
     BST->print_tree();
+    cout << "min :" << BST->min() << endl;
+    BST->erase(4);
+    cout << "erase 4" << endl;
+    BST->print_tree();
+    cout << "---" << endl;
+    cout << "min :" << BST->min() << endl;
     return 0;
 }
 
