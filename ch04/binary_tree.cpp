@@ -99,18 +99,27 @@ public:
     {
         Node* current = root;
         Node* parent = NULL;
-        while (current->data != key && current != NULL)
+        while (current->data != key)
         {
             parent = current;
 
             if (current->data > key)
             {
-                if (current->left_child == NULL) break;
+                if (current->left_child == NULL) 
+                {
+                    // the tree has no key and exit after this roop
+                    current = NULL;
+                    break;
+                }
                 else current = current->left_child;
             }
             else
             {
-                if (current->right_child == NULL) break;
+                if (current->right_child == NULL) 
+                {
+                    current = NULL;
+                    break;
+                }
                 else current = current->right_child;
             }
         }
