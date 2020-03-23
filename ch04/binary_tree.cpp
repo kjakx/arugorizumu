@@ -107,7 +107,7 @@ public:
             {
                 if (current->left_child == NULL) 
                 {
-                    // the tree has no key and exit after this roop
+                    // the tree has no key and exit after this loop
                     current = NULL;
                     break;
                 }
