@@ -12,7 +12,7 @@ int main()
     string text = "string pattern matching";
     string pattern = "ing";
     int pos;
-    vector<int> f;
+    vector<int> f(pattern.size());
     pos = kmp_matching(text, pattern, f);
     if (pos < 0) cout << "not found" << endl;
     else cout << "pattern found at " << pos << endl;
@@ -41,4 +41,24 @@ int kmp_matching(string text, string pattern, vector<int>& f)
         pos = i_head - i_pattern;
     }
     return pos;
+}
+
+void failure_function(string pattern, vector<int>& f)
+{
+    int i_pattern = -1;
+    int i_head = 0;
+    f[0] = -1;
+    while(i_head < pattern.size())
+    {
+        if (i_pattern == -1 || pattern[i_pattern] == pattern[i_head])
+        {
+            i_pattern++;
+            i_head++;
+            f[i_head] = i_pattern;
+        }
+        else
+        {
+            i_pattern = f[i_pattern];
+        }
+    }
 }
