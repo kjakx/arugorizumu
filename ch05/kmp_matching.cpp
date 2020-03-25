@@ -4,13 +4,13 @@
 
 using namespace std;
 
-int kmp_matching(string text, string pattern, vector<int>& f);
-void failure_function(vector<int>& f);
+int kmp_matching(string& text, string& pattern, vector<int>& f);
+void failure_function(string& pattern, vector<int>& f);
 
 int main()
 {
-    string text = "string pattern matching";
-    string pattern = "ing";
+    string text = "ababdababccbdcabcadb";
+    string pattern = "ababc";
     int pos;
     vector<int> f(pattern.size());
     pos = kmp_matching(text, pattern, f);
@@ -18,13 +18,13 @@ int main()
     else cout << "pattern found at " << pos << endl;
 }
 
-int kmp_matching(string text, string pattern, vector<int>& f)
+int kmp_matching(string& text, string& pattern, vector<int>& f)
 {
-    failure_function(f);
+    failure_function(pattern, f);
     int i_pattern = 0;
     int i_head = 0;
     int pos = -1;
-    while (i_head < text.size() && i_pattern < pattern.size())
+    while (i_pattern <= int(pattern.size() - 1) && i_head <= int(text.size() - 1))
     {
         if (i_pattern == -1 || pattern[i_pattern] == text[i_head])
         {
@@ -43,12 +43,12 @@ int kmp_matching(string text, string pattern, vector<int>& f)
     return pos;
 }
 
-void failure_function(string pattern, vector<int>& f)
+void failure_function(string& pattern, vector<int>& f)
 {
     int i_pattern = -1;
     int i_head = 0;
     f[0] = -1;
-    while(i_head < pattern.size())
+    while(i_head < pattern.size() - 1)
     {
         if (i_pattern == -1 || pattern[i_pattern] == pattern[i_head])
         {
