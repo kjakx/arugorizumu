@@ -47,9 +47,10 @@ void h_function(string& pattern, vector<int>& h, vector<int>& f)
     {
         if (j == pattern.size() || pattern[i] == pattern[j])
         {
-            i = i - 1;
-            j = j - 1;
-            f[i] = j;
+            i--;
+            j--;
+            if (i < 0) break;
+            else f[i] = j;
         }
         else
         {
