@@ -60,7 +60,7 @@ void h_function(string& pattern, vector<int>& h, vector<int>& f)
     }
     for (i = 0; i < pattern.size(); i++)
     {
-        h[i] = min(h[j], int(pattern.size()) - 1 + j - i);
+        h[i] = min(h[i], int(pattern.size()) - 1 + j - i);
         if (i >= j)
         {
             j = f[j];
