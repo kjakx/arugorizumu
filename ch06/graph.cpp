@@ -19,7 +19,7 @@ public:
         data.resize(N);
     }
 
-    void bfs()
+    void bfs(int v0)
     {
         int count = 0;
         for (int i = 0; i < data.size(); i++)
@@ -27,7 +27,7 @@ public:
             data[i] = 0;
         }
         queue<int> q;
-        q.push(0);
+        q.push(v0);
         while (!q.empty())
         {
             int w = q.front(); q.pop();
@@ -42,7 +42,7 @@ public:
         }
     }
 
-    void dfs()
+    void dfs(int v0)
     {
         int count = 0;
         for (int i = 0; i < data.size(); i++)
@@ -50,7 +50,7 @@ public:
             data[i] = 0;
         }
         stack<int> s;
-        s.push(0);
+        s.push(v0);
         while (!s.empty())
         {
             int w = s.top(); s.pop();
@@ -106,15 +106,15 @@ public:
         visit.resize(n, false);
     }
 
-    void dijkstra()
+    void dijkstra(int v0)
     {
         set<int> N;
         for (int i = 0; i < data.size(); i++)
         {
             visit[i] = false;
         }
-        N.insert(0);
-        dist[0] = 0;
+        N.insert(v0);
+        dist[v0] = 0;
         while(!N.empty())
         {
             int v;
@@ -127,7 +127,6 @@ public:
                     v = w;
                 }
             }
-            cout << v << endl;
             visit[v] = true;
             N.erase(v);
             for (int u : neighbor_list[v])
@@ -180,5 +179,5 @@ int main()
     net.neighbor_list[6] = {4, 5, 7};
     net.neighbor_list[7] = {6, 8};
     net.neighbor_list[8] = {3, 5, 7};
-    net.dijkstra(); net.print_graph();
+    net.dijkstra(0); net.print_graph();
 }
