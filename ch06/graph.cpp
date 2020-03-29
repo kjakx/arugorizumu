@@ -1,6 +1,7 @@
 #include <iostream>
 #include <vector>
 #include <stack>
+#include <queue>
 
 using namespace std;
 
@@ -16,6 +17,29 @@ public:
         data.resize(N);
     }
 
+    void bfs()
+    {
+        int count = 0;
+        for (int i = 0; i < data.size(); i++)
+        {
+            data[i] = 0;
+        }
+        queue<int> q;
+        q.push(0);
+        while (!q.empty())
+        {
+            int w = q.front(); q.pop();
+            if (data[w] == 0)
+            {
+                data[w] = ++count;
+                for (int u : neighbor_list[w])
+                {
+                    if (data[u] == 0) q.push(u);
+                }
+            }
+        }
+    }
+
     void dfs()
     {
         int count = 0;
@@ -28,10 +52,13 @@ public:
         while (!s.empty())
         {
             int w = s.top(); s.pop();
-            data[w] = ++count;
-            for (int u : neighbor_list[w])
+            if (data[w] == 0)
             {
-                if (data[u] == 0) s.push(u);
+                data[w] = ++count;
+                for (int u : neighbor_list[w])
+                {
+                    if (data[u] == 0) s.push(u);
+                }
             }
         }
     }
