@@ -107,7 +107,7 @@ const int d[9][9] =
     {230, INF, 140, INF,   0, INF,  40, INF, INF},
     {INF, INF, INF,  90, INF,   0, 210, INF, 200},
     {INF, INF, INF, INF,  40, 210,   0, 180, INF},
-    {INF, INF, INF, INF, INF, INF, 180,   0, INF},
+    {INF, INF, INF, INF, INF, INF, 180,   0, 180},
     {INF, INF, INF, 230, INF, 200, INF, 180,   0}
 };
 
