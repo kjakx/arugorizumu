@@ -65,6 +65,23 @@ public:
         }
     }
 
+    void dfs_recursive(int v0)
+    {
+        int count = 0;
+        for (int i = 0; i < data.size(); i++)
+        {
+            data[i] = 0;
+        }
+        if (data[v0] == 0)
+        {
+            data[v0] = ++count;
+            for (int u : neighbor_list[v0])
+            {
+                if (data[u] == 0) dfs_recursive(u);
+            }
+        }
+    }
+
     void print_graph()
     {
         for (int i = 0; i < data.size(); i++)
