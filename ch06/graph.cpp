@@ -30,11 +30,6 @@ public:
 
     void bfs(int v0)
     {
-        int count = 0;
-        for (int i = 0; i < data.size(); i++)
-        {
-            data[i] = 0;
-        }
         queue<int> q;
         q.push(v0);
         while (!q.empty())
@@ -69,6 +64,7 @@ public:
         }
     }
 
+    // if too deep recursion occurs, use non-recursive dfs to prevent stack overflow.
     void dfs_recursive(int v0)
     {
         if (data[v0] == 0)
@@ -114,27 +110,34 @@ class Network : public Graph
 {
 public:
     vector<int> dist;
+    vector<int> path;
     vector<bool> visit;
 
     Network(int n) : Graph(n)
     {
         dist.resize(n);
+        path.resize(n);
+        visit.resize(n, false);
+    }
+
+    void init(int n)
+    {
+        dist.resize(n);
+        path.resize(n);
         visit.resize(n, false);
     }
 
     void dijkstra(int v0)
     {
         set<int> N;
-        for (int i = 0; i < data.size(); i++)
-        {
-            visit[i] = false;
-        }
         N.insert(v0);
         dist[v0] = 0;
+        path[v0] = 0;
         while(!N.empty())
         {
             int v;
             int m = INF;
+            // find vertex v which has the shortest path from v_prev.
             for (int w : N)
             {
                 if (m > dist[w])
@@ -152,12 +155,17 @@ public:
                     // if (N.contains(u)) (from C++20)
                     if (N.find(u) != N.end())
                     {
-                        dist[u] = min(dist[u], dist[v] + d[v][u]);
+                        if (dist[u] > dist[v] + d[v][u])
+                        {
+                            dist[u] = dist[v] + d[v][u];
+                            path[u] = v;
+                        }
                     }
                     else
                     {
                         N.insert(u);
                         dist[u] = dist[v] + d[v][u];
+                        path[u] = v;
                     }
                 }
             }
@@ -168,6 +176,8 @@ public:
     {
         for (int i = 0; i < data.size(); i++)
         {
+            cout << "vertex_number : " << i << endl;
+            cout << "neighbor list : " << endl;
             cout << i;
             for (int u : neighbor_list[i])
             {
@@ -176,6 +186,15 @@ public:
             cout << endl;
             cout << "data : " << data[i] << endl;
             cout << "dist : " << dist[i] << endl;
+            cout << "path : " << endl;
+            int j = i;
+            cout << j;
+            while (j != path[j])
+            {
+                j = path[j];
+                cout << " <- " << j;
+            }
+            cout << endl;
             cout << "---" << endl;
         }
     }
@@ -186,7 +205,7 @@ int M = 7;
 
 int main()
 {
-    /*** dijkstra test
+    // dijkstra test
     Network net(N);
     net.neighbor_list[0] = {1, 3, 4};
     net.neighbor_list[1] = {0, 2};
@@ -198,9 +217,8 @@ int main()
     net.neighbor_list[7] = {6, 8};
     net.neighbor_list[8] = {3, 5, 7};
     net.dijkstra(0); net.print_graph();
-    ***/
 
-    // p6.1 recursive dfs
+    /*** p6.1 recursive dfs
     Graph g(M);
     g.neighbor_list[0] = {1, 4};
     g.neighbor_list[1] = {2, 4, 5};
@@ -210,4 +228,5 @@ int main()
     g.neighbor_list[5] = {2, 6};
     g.neighbor_list[6] = {4, 5};
     g.dfs_recursive(0); g.print_graph();
+    ***/
 }
