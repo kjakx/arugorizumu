@@ -12,11 +12,20 @@ class Graph
 public:
     vector<vector<int>> neighbor_list;
     vector<int> data;
+    int count;
 
     Graph(int N)
     {
         neighbor_list.resize(N);
-        data.resize(N);
+        data.resize(N, 0);
+        count = 0;
+    }
+
+    void init(int N)
+    {
+        neighbor_list.resize(N);
+        data.resize(N, 0);
+        count = 0;
     }
 
     void bfs(int v0)
@@ -44,11 +53,6 @@ public:
 
     void dfs(int v0)
     {
-        int count = 0;
-        for (int i = 0; i < data.size(); i++)
-        {
-            data[i] = 0;
-        }
         stack<int> s;
         s.push(v0);
         while (!s.empty())
@@ -67,11 +71,6 @@ public:
 
     void dfs_recursive(int v0)
     {
-        int count = 0;
-        for (int i = 0; i < data.size(); i++)
-        {
-            data[i] = 0;
-        }
         if (data[v0] == 0)
         {
             data[v0] = ++count;
@@ -183,9 +182,11 @@ public:
 };
 
 int N = 9;
+int M = 7;
 
 int main()
 {
+    /*** dijkstra test
     Network net(N);
     net.neighbor_list[0] = {1, 3, 4};
     net.neighbor_list[1] = {0, 2};
@@ -197,4 +198,16 @@ int main()
     net.neighbor_list[7] = {6, 8};
     net.neighbor_list[8] = {3, 5, 7};
     net.dijkstra(0); net.print_graph();
+    ***/
+
+    // p6.1 recursive dfs
+    Graph g(M);
+    g.neighbor_list[0] = {1, 4};
+    g.neighbor_list[1] = {2, 4, 5};
+    g.neighbor_list[2] = {5};
+    g.neighbor_list[3] = {0, 4};
+    g.neighbor_list[4] = {3, 5};
+    g.neighbor_list[5] = {2, 6};
+    g.neighbor_list[6] = {4, 5};
+    g.dfs_recursive(0); g.print_graph();
 }
