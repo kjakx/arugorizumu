@@ -52,10 +52,7 @@ void knapsack(vector<double>& values, vector<double>& weights, set<int>& S)
     double value = 0;
     double weight = 0;
     vector<int> item_rank(N_ITEMS);
-    for (int i = 0; i < N_ITEMS; i++)
-    {
-        item_rank[i] = i;
-    }
+    iota(item_rank.begin(), item_rank.end(), 0);
     // compute rank of items (value per weight)
     sort(item_rank.begin(), item_rank.end(), 
         [&](int i, int j)
