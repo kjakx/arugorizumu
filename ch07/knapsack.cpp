@@ -52,36 +52,36 @@ void knapsack(vector<double>& values, vector<double>& weights, set<int>& S)
     double value = 0;
     double weight = 0;
     int n_items = values.size();
-    vector<int> rank_item(n_items);
+    vector<int> item_rank(n_items);
     for (int i = 0; i < n_items; i++)
     {
-        rank_item[i] = i;
+        item_rank[i] = i;
     }
     // compute rank of items (value per weight)
-    sort(rank_item.begin(), rank_item.end(), 
+    sort(item_rank.begin(), item_rank.end(), 
         [&](int i, int j)
         {
             return (values[i] / weights[i]) > (values[j] / weights[j]);
         }
     );
-    print_vector(rank_item, "rank_item :");
+    print_vector(item_rank, "item_rank :");
     for (int i = 0; i < N_ITEMS; i++)
     {
-        if (weight + weights[rank_item[i]] <= MAX_WEIGHT)
+        if (weight + weights[item_rank[i]] <= MAX_WEIGHT)
         {
-            S.insert(rank_item[i]);
-            value += values[rank_item[i]];
-            weight += weights[rank_item[i]];
+            S.insert(item_rank[i]);
+            value += values[item_rank[i]];
+            weight += weights[item_rank[i]];
         }
     }
     int i_max_value;
     double max_value = -1;
     for (int i = 0; i < N_ITEMS; i++)
     {
-        if (max_value < values[rank_item[i]] && weights[rank_item[i]] < MAX_WEIGHT)
+        if (max_value < values[item_rank[i]] && weights[item_rank[i]] < MAX_WEIGHT)
         {
-            i_max_value = rank_item[i];
-            max_value = values[rank_item[i]];
+            i_max_value = item_rank[i];
+            max_value = values[item_rank[i]];
         }
     }
     if (value < max_value)
