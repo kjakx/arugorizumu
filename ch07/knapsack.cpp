@@ -51,9 +51,8 @@ void knapsack(vector<double>& values, vector<double>& weights, set<int>& S)
 {
     double value = 0;
     double weight = 0;
-    int n_items = values.size();
-    vector<int> item_rank(n_items);
-    for (int i = 0; i < n_items; i++)
+    vector<int> item_rank(N_ITEMS);
+    for (int i = 0; i < N_ITEMS; i++)
     {
         item_rank[i] = i;
     }
